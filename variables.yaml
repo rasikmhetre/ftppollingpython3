@@ -1,0 +1,6 @@
+host: 192.168.86.80
+user: "ftpuser"
+passwd: "ftpuser"
+filelocation: "//files/"
+port: 514
+loggingfile: "ftplogging"

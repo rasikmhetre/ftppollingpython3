@@ -1,0 +1,65 @@
+#!/usr/bin/python3
+import os
+import time
+import ftplib
+import yaml
+import socket
+import sys
+import socket
+import logging
+#time=str(os.system("date +%Y%m%d%H%M%S"))
+stream = open('variables.yaml', 'r')
+data = yaml.safe_load(stream)
+print (data)
+user = data['user']
+passwd = data['passwd']
+host = data['host']
+PORT = data["port"]
+s = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+s.connect((host, PORT))
+class Connector:
+###Downloading new file from ftp if found
+  def ftpconn(self):
+    while True:
+      listing=[]
+      ftp = ftplib.FTP(host)
+      ftp.login(user=user,passwd=passwd)
+      ftp.cwd(data['filelocation'])
+      ftp.retrlines("LIST", listing.append)
+      for i in range(len(listing)):
+        words = listing[i].split(None, 8)
+        print (words[-1])
+        #os.system("wget --user "+ user+ " --password "+passwd+ " ftp://"+host+data['filelocation']+words[-1])
+        obj = open("filelogs","r+")
+        content = obj.read()
+        if words[-1] in content:
+          print ("file has already been downloaded")
+        else:
+          logging.basicConfig(filename='ftp.log',level=logging.DEBUG)
+          logging.debug('New file has been updated in FTP directory, downloading it....... ',words[-1])
+          logging.info('New file has been updated in FTP directory, downloading it....... ',words[-1])
+          os.system("wget --user "+ user+ " --password "+passwd+ " ftp://"+host+data['filelocation']+words[-1])
+###Sending data through socket on 514 port
+          obj.write(words[-1]+'\n')
+          print("[+] Connected with Server")
+          obj2=open(words[-1],"r")
+          for k in obj2.readlines():
+            print (k)
+            s.send(k.encode('ascii'))
+            time.sleep(0.5)
+        obj.close()
+    s.close()
+#########################################################
+#
+#  def sendata(self):
+#    s = socket.socket(socket.AF_INET,   socket.SOCK_STREAM)
+#    s.connect((host, PORT))
+#    print("[+] Connected with Server")
+#    file = open("logs","r")
+#    for i in file.readlines():
+#      s.send(i.encode())
+#      time.sleep(0.5)
+#    s.close()
+con=Connector()
+con.ftpconn()
+#con.sendata()
