@@ -2,7 +2,8 @@ import socket
 import sys
 
 
-HOST = "192.168.86.80"
+#HOST = "192.168.86.80"
+HOST = "172.20.10.11"
 PORT = 514
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
