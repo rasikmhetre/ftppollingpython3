@@ -1,5 +1,4 @@
-offhost: 192.168.86.80
-host: 172.20.10.11
+host: 192.168.86.246
 user: "ftpuser"
 passwd: "ftpuser"
 filelocation: "//files/"

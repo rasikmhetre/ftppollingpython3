@@ -2,14 +2,13 @@ import socket
 import sys
 
 
-#HOST = "192.168.86.80"
-HOST = "172.20.10.11"
+HOST = "192.168.86.246"
 PORT = 514
 
 s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 s.bind((HOST, PORT))
 s.listen(5)
-
+s.settimeout(172800)
 print("Listening ...")
 
 while True:
