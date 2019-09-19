@@ -1,4 +1,4 @@
-host: 192.168.86.246
+host: 192.168.86.46
 user: "ftpuser"
 passwd: "ftpuser"
 filelocation: "//files/"
